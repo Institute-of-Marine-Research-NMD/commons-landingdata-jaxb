@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.imr.no/formats/nmdlandingdata/v1"
+           xmlns="http://www.imr.no/formats/nmdlandingdata/v1">
+
+    <xs:element name="LandingdataList" type="LandingdataListType" />
+
+    <xs:element name="landingdata" type="LandingdataType" />
+
+    <!--
+        CruiseSeries type.
+    -->
+    <xs:complexType name="LandingdataListType">
+        <xs:sequence>
+            <xs:element name="landingdata" type="LandingdataType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--
+        CruiseSerie type.
+    -->
+    <xs:complexType name="LandingdataType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="speciesList" type="SpeciesListType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="year" type="xs:integer" />
+    </xs:complexType>
+
+    <xs:complexType name="SpeciesListType">
+        <xs:sequence>
+            <xs:element name="species" type="SpeciesType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="totalWeight" type="xs:double" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SpeciesType">
+        <xs:sequence>
+            <xs:element name="name" type="NameType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="landingMonth" type="LandingMonthType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="ns9400" type="xs:string" />
+        <xs:attribute name="gmlFiskesortskode" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="LandingMonthType">
+        <xs:sequence>
+            <xs:element name="coastalSea" type="CoastalSeaType" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="month" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="CoastalSeaType">
+        <xs:sequence>
+            <xs:element name="area" type="AreaType" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="code" type="xs:string" />
+        <xs:attribute name="type" type="CoastalSeaEnumType" />
+    </xs:complexType>
+
+    <xs:complexType name="AreaType">
+        <xs:sequence>
+            <xs:element name="equipment" type="EquipmentType"  minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="areaCode" type="xs:string" />
+        <xs:attribute name="mainAreaCode" type="xs:string" />
+        <xs:attribute name="locationCode" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="EquipmentType">
+        <xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="code" type="xs:string" />
+        <xs:attribute name="description" type="xs:string" />
+    </xs:complexType>
+
+    <xs:simpleType name="CoastalSeaEnumType" >
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Coast" />
+            <xs:enumeration value="Sea" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
